@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+int main() {
+	srand(time(0));
+	int max = 3, min = 1, pick;
+	int e = rand() % (max - min) + min;
+	cin >> pick;
+
+	if (pick == 1)
+	{
+		cout << "rock\n";
+		e;
+	}
+	else if (pick == 2)
+	{
+		cout << "paper\n";
+		e;
+	}
+	else if (pick == 3)
+	{
+		cout << "scissors\n";
+		e;
+	}
+	if (e==1)
+	{
+		cout << "rock\n";
+	}
+	else if (e == 2)
+	{
+		cout << "paper\n";
+	}
+	else if (e == 3)
+	{
+		cout << "scissors\n";
+	}
+
+}
