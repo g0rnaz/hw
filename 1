@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+int main() {
+	int a;
+	int summ=0;
+	cin >> a;
+	while (a < 500)
+	{
+		summ += a;
+		a++;
+	}
+	cout << summ;
+}
+
+#include <iostream>
+using namespace std;
+int main() {
+	int a, y, aa;
+	cin >> a >> y;
+	aa = a;
+	while (1 < y)
+	{
+		aa *= a;
+		y--;
+	}
+	cout << aa;
+}
+
+
+#include <iostream>
+using namespace std;
+int main() {
+	float a = 1, b = 1000, avg = 0, counter = 0, summ = 0;
+
+	while (a<b)
+	{
+		summ += a;
+		counter++;
+		a++;
+	}
+	avg = summ / counter;
+	cout << avg;
+}
