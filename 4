@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+int main() {
+	unsigned int const N = 12;
+	srand(time(0));
+	int arr[N];
+	int summ = 0, mult=1;
+	for (int i = 0; i < N; i++)
+	{
+		arr[i] = rand() % (10 + 10) - 10;
+	}
+	for (int i = 0; i < N / 2; i++)
+	{
+		cout << arr[i];
+	}
+	for (int i = N / 2; i < N; i++)
+	{
+		summ += arr[i];
+		mult *= arr[i];
+	}
+	cout <<endl<< summ<< " " << mult;
+}
