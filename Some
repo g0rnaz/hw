@@ -1,0 +1,40 @@
+// Sample C++ code
+#include <iostream>
+using namespace std;
+
+int main() {
+    int unsigned const N=5;
+    int arr[N]{1,2,3,4,5};
+    srand(time(0));
+    int search, count=0;
+    cin >> search;
+    for(int i= 0; i<N; i++)
+        {
+            count++;
+            if (arr[i]==search)
+            {
+               cout<<"found " << count;
+                break;
+            }
+        }
+    int lefti=arr[0],righti=arr[N-1], mid;
+    count =0;
+    while (true){
+        count++;
+        mid =(lefti+righti)/2;
+        if (search>mid)
+        {
+            lefti=mid+1;
+        }
+        if (search<mid)
+        {
+            righti=mid-1;
+        }
+        if (search==mid)
+        {
+            cout << "found "<< count;
+            break;
+        }
+    }
+    
+}
