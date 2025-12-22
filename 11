@@ -1,0 +1,16 @@
+#include <iostream>
+using namespace std;
+int main() {
+	int unsigned const N=5;
+	int arr[N]{ 4,5,2,6,4 };
+	int count=0;
+	for (int i = 0; i < N - 1; i++)
+	{
+		if (arr[i] > arr[i + 1])
+		{
+			cout << i << " ";
+			count++;
+		}
+	}
+	cout << endl << count;
+}
