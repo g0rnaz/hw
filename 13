@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	unsigned int const COLS = 10, ROWS = 10;
+	srand(time(0));
+	int arr[ROWS][COLS], summ_per2=0,summ_per5=0;
+	for (int i = 0; i < ROWS; i++)
+	{
+		for (int j = 0; j < COLS; j++)
+		{
+			arr[i][j] = rand() % 10;
+			cout << arr[i][j] << " ";
+			if (arr[i][j] % 2 == 0)
+			{
+				summ_per2++;
+			}
+			if (arr[i][j] % 5 == 0)
+			{
+				summ_per5++;
+			}
+		}
+		cout << endl;
+	}
+	cout << endl << summ_per2 << " " << summ_per5 << endl;
+
+	//якщо треба для кожного то
+	summ_per2 = 0; 
+	summ_per5 = 0;
+	for (int i = 0; i < ROWS; i++)
+	{
+		for (int j = 0; j < COLS; j++)
+		{
+			if (arr[i][j] % 2 == 0)
+			{
+				summ_per2++;
+			}
+			if (arr[i][j] % 5 == 0)
+			{
+				summ_per5++;
+			}
+		}
+		cout << endl <<"summ_2 "<<i<<" "<<summ_per2;
+		cout << endl << "summ_5 " << i << " " << summ_per5 << endl;
+		summ_per2 = 0;
+		summ_per5 = 0;
+	}
+}
