@@ -1,0 +1,50 @@
+#include <iostream>
+using namespace std;
+template<typename T, typename T1>
+int pluss(T arr[], T1 size)
+{
+	int pluss = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (arr[i] > 0)
+		{
+			pluss++;
+		}
+	}
+	return pluss;
+}
+
+template<typename T, typename T1>
+int minuss(T arr[], T1 size)
+{
+	int minus = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (arr[i] < 0)
+		{
+			minus++;
+		}
+	}
+	return minus;
+}
+
+template<typename T, typename T1>
+int zero(T arr[], T1 size)
+{
+	int zero = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (arr[i] == 0)
+		{
+			zero++;
+		}
+	}
+	return zero;
+}
+int main() {
+	const int N = 6;
+	float arr[N] = { 0,1,1,-1,-1,1 };
+	cout <<pluss(arr, N);
+	cout << minuss(arr, N);
+	cout << zero(arr, N);
+}
