@@ -1,0 +1,38 @@
+#include iostream
+using namespace std;
+
+int main() {
+	int n;
+	cin  n;
+	int prices = new int[n];
+	for (int i = 0; i  n; i++)
+	{
+		cin  prices[i];
+	}
+	int even = 0;
+	for (int i = 0; i  n; i++)
+	{
+		if (prices[i] % 2 == 0)
+		{
+			even++;
+		}
+	}
+	int minus = 0;
+
+	int arr = new int[even];
+	for (int i = 0,j=0; i  even; i++)
+	{
+		if (prices[i] % 2 == 0)
+		{
+			arr[j] = prices[i];
+			j++;
+		}
+		
+	}
+	for (int i = 0; i  even; i++)
+	{
+		cout  arr[i]   ;
+	}
+	delete[] prices;
+	delete[] arr;
+}
