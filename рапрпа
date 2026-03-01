@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+void filler(int* arr, int size) {
+	for (int i = 0; i < size; i++)
+	{
+		arr[i] = rand() % (10+10)-10;
+	}
+}
+void printer(int* arr, int size) {
+	for (int i = 0; i < size; i++)
+	{
+		cout << arr[i] << " ";
+	}
+	cout << endl;
+}
+int* merger(int* arr, int nsize, int* ar, int msize, int index, int& size) {
+	size = nsize + msize;
+	int* newarr = new int[size];
+	int j = 0;
+	for (int i = 0; i < nsize; i++)
+	{
+		if (i == index)
+		{
+			for (int l = 0; l < msize;l++)
+			{
+				newarr[i + l] = ar[l];
+			}
+			j = msize;
+		}
+		newarr[i + j] = arr[i];
+	}
+	if (index == nsize)
+	{
+		for (int l = 0; l < msize; l++)
+			newarr[index + l] = ar[l];
+	}
+	return newarr;
+
+}
+int main() {
+	srand(time(0));
+	int n, m, size, index;
+	cin >> n >> m >> index;
+	while (index<0 || index >n)
+	{
+		cin >> index;
+	}
+	int* arr = new int[n];
+	int* ar = new int[m];
+	filler(arr, n);
+	filler(ar, m);
+	printer(arr, n);
+	printer(ar, m);
+	int* result = merger(arr, n, ar, m, index, size);
+	printer(result, size);
+	delete[] arr;
+	delete[] ar;
+	delete[] result;
+}
