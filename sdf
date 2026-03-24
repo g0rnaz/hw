@@ -1,0 +1,53 @@
+#include <iostream>
+using namespace std;
+int sogl(const char str, bool check) {
+	const int TOTALSOGL = (20 * 2) + 1;
+	const char newstr[TOTALSOGL] = { 'B', 'b', 'C', 'c', 'D', 'd', 'F', 'f', 'G', 'g', 'H', 'h', 'J', 'j', 'K', 'k', 'L', 'l', 'M', 'm', 'N', 'n', 'P', 'p', 'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'V', 'v', 'W', 'w', 'X', 'x', 'Z', 'z' };
+	for (int i = 0; i < TOTALSOGL - 1; i++)
+	{
+		if (str == newstr[i])
+		{
+			
+			return check = 1;;
+		}
+	}
+}
+int glas(const char str, bool check) {
+	const int TOTALSOGL = (12 * 2) + 1;
+	const char newstr[TOTALSOGL] = { 'A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'U', 'u', 'Y', 'y'};
+	for (int i = 0; i < TOTALSOGL - 1; i++)
+	{
+		if (str == newstr[i])
+		{
+			return check = 1;;
+		}
+	}
+}
+void stats(const char* str)
+{
+	int sogl1 = 0, glas1 = 0, symbol = 0;
+	int size = strlen(str)+1;
+	bool check;
+	for (int i = 0; i < size - 1; i++)
+	{
+		check = 0;
+		if (sogl(str[i], check) == 1)
+		{
+			sogl1++;
+		}
+		else if (glas(str[i], check) == 1)
+		{
+			glas1++;
+		}
+		else
+		{
+			symbol++;
+		}
+	}
+	cout << sogl1 << endl << glas1 << endl << symbol;
+}
+int main() {
+	const int N = 4;
+	char str[N] = { 'c','a1','1' };
+	stats(str);
+}
