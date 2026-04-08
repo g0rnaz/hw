@@ -1,0 +1,88 @@
+#include <iostream>
+using namespace std;
+void fill(int** arr, int cols, int rows) {
+	for (int i=0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			arr[i][j] = rand() % 13;
+		}
+	}
+}
+void print(int** arr, int cols, int rows) {
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			cout << arr[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+void deletearr(int** arr, int rows) {
+	for (int i = 0; i < rows; i++)
+	{
+		delete[] arr[i];
+	}
+	delete[] arr;
+}
+void sort(int** arr, int cols, int rows) {
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			for (int k = 0; k < cols-1; k++)
+			{
+				if (arr[i][k] < arr[i][k + 1])
+				{
+					swap(arr[i][k], arr[i][k + 1]);
+				}
+			}
+		}
+	}
+}
+void average(int** arr, int cols, int rows) {
+	float avg = 0, summ = 0, saver, number;
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			summ+=arr[i][j];
+		}
+		cout << i+1 <<" avg:" << summ / cols << endl;
+		if (avg < summ/cols)
+		{
+			avg = summ / cols;
+			saver = avg;
+		}
+		summ = 0;
+	}
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			summ += arr[i][j];
+		}
+		avg = summ / cols;
+		if (avg == saver)
+		{
+			cout << i + 1 << " ";
+		}
+		summ = 0;
+	}
+}
+int main() {
+	srand(time(0));
+	int rows, cols, avg;
+	cin >> rows >> cols;
+	int** arr = new int* [rows];
+	for (int i = 0; i < rows; i++)
+	{
+		arr[i] = new int [cols];
+	}
+	fill(arr, cols, rows);
+	sort(arr, cols, rows);
+	print(arr, cols, rows);
+	average(arr, cols, rows);
+	deletearr(arr, rows);
+}
