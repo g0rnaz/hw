@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+int main() {
+	srand(time(0));
+	bool repeater=true;
+	int rolls, random, checker, iften = 1;
+	const int SUMM_FROM_1_TO_10 = 55, TOTAL_NUMBERS = 10;
+	float number = 0, best = 0;
+	while (repeater == true)
+	{
+		cout << "type 'false' to end" << endl;
+		cin >> repeater;
+		cout << "input amount of rolls: ";
+		cin >> rolls;
+		for (int i = 0; i < rolls; i++)
+		{
+			number = 0;
+			iften = 1;
+			for (int k = 0; k < iften; k++)
+			{
+				random = rand() % SUMM_FROM_1_TO_10;
+				int j = SUMM_FROM_1_TO_10;
+				for (int l = TOTAL_NUMBERS; l >= 0; l--)
+				{
+					if (random < j)
+					{
+						j -= l;
+					}
+					else if (random >= j)
+					{
+						random = TOTAL_NUMBERS - l-1;
+						break;
+					}
+				}
+				number += random * pow(10, k);
+				if (rand() % TOTAL_NUMBERS == 9)
+				{
+					iften++;
+				}
+				else {
+					if (number > best)
+					{
+						best = number;
+					}
+					cout <<number << " ";
+				}
+			}
+		}
+		cout << "best" << best << endl;
+	}
+}
