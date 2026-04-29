@@ -31,7 +31,6 @@ void number_generator(int iften, int* random, double number, double* best, const
 			{
 				*best = number;
 			}
-			cout << number << " ";
 		}
 	}
 }
