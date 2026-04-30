@@ -92,8 +92,6 @@ int main() {
     }
     while (win == 0)
     {
-        checker(timerr, cols, rows, counter, applechecker);
-        timerr[snake.y][snake.x] = counter;
         if (applechecker == 1)
         {
             do {
@@ -115,6 +113,8 @@ int main() {
                 }
             }
         }
+        checker(timerr, cols, rows, counter, applechecker);
+        timerr[snake.y][snake.x] = counter;
         printer(timerr, arr, cols, rows);
         cout << endl << "wasd to move(e to end)" << endl;
         cin.ignore();
