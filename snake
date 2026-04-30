@@ -1,146 +1,153 @@
 #include <iostream>
 using namespace std;
 struct Apple {
-	int x;
-	int y;
+    int x;
+    int y;
 };
 struct Snake {
-	int x;
-	int y;
+    int x;
+    int y;
 };
-void deleter(char** arr, int cols)
+void chardeleter(char** arr, int cols)
 {
-	for (int i = 0; i < cols; i++)
-	{
-		delete[] arr[i];
-	}
-	delete[] arr;
+    for (int i = 0; i < cols; i++)
+    {
+        delete[] arr[i];
+    }
+    delete[] arr;
 }
-void checker(char** snake,int** timerr, int cols, int rows, int counter, bool applechecker)
+void intdeleter(int** arr, int cols)
 {
-	for (int i = 0; i < cols; i++)
-	{
-		for (int j = 0; j < rows; j++)
-		{
-			if (applechecker == 1)
-			{
-				timerr[i][j]++;
-			}
-			timerr[i][j]--;
-			if (timerr[i][j] <= 0)
-			{
-				snake[i][j] = 'X';
-			}
-		}
-	}
+    for (int i = 0; i < cols; i++)
+    {
+        delete[] arr[i];
+    }
+    delete[] arr;
 }
-void printer(char** snake, char** arr, int cols, int rows)
+void checker(int** timerr, int cols, int rows, int counter, bool applechecker)
 {
-	for (int i = 0; i < cols; i++)
-	{
-		for (int j = 0; j < rows; j++)
-		{
-			if (snake[i][j] == 'S')
-			{
-				cout << "S" << " ";
-			}
-			else {
-				cout << arr[i][j] << " ";
-			}
-		}
-		cout << endl;
-	}
+    for (int i = 0; i < cols; i++)
+    {
+        for (int j = 0; j < rows; j++)
+        {
+            if (applechecker == 1)
+            {
+                timerr[i][j]++;
+            }
+            timerr[i][j]--;
+        }
+    }
+}
+void printer(int** timerr, char** arr, int cols, int rows)
+{
+    for (int i = 0; i < cols; i++)
+    {
+        for (int j = 0; j < rows; j++)
+        {
+            if (timerr[i][j] > 0)
+            {
+                cout << "S" << " ";
+            }
+            else {
+                cout << arr[i][j] << " ";
+            }
+        }
+        cout << endl;
+    }
 }
 int main() {
-	Apple apple;
-	Snake snake;
-	srand(time(0));
-	int rows, cols, xsaver=0, ysaver=0, x = 0, y = 0, counter=1;
-	char move;
-	bool win = 0, applechecker=0;
-	cin >> rows >> cols;
-	char** arr = new char* [rows];
-	char** bodysnake = new char* [rows];
-	int** timerr = new int* [rows];
-	apple.x = rand() % rows;
-	apple.y = rand() % cols;
-	snake.x = rand() % rows;
-	snake.y = rand() % cols;
-	for (int i = 0; i < cols; i++)
-	{
-		arr[i] = new char[cols];
-	}
-	for (int i = 0; i < cols; i++)
-	{
-		bodysnake[i] = new char[cols];
-	}
-	for (int i = 0; i < cols; i++)
-	{
-		timerr[i] = new int[cols];
-	}
-	for (int i = 0; i < cols; i++)
-	{
-		for (int j = 0; j < rows; j++)
-		{
-			timerr[i][j] = 0;
-		}
-	}
-	while (win == 0)
-	{
-		if (applechecker == 1)
-		{
-			apple.x = rand() % rows;
-			apple.y = rand() % cols;
-			counter++;
-		}
-		for (int i = 0; i < cols; i++)
-		{
-			for (int j = 0; j < rows; j++)
-			{
-				if (i == apple.y && j == apple.x)
-				{
-					arr[i][j] = 'A';
-				}
-				else {
-					arr[i][j] = 'X';
-				}
-			}
-		}
-		checker(bodysnake, timerr, cols, rows, counter, applechecker);
-		bodysnake[snake.y][snake.x] = 'S';
-		timerr[snake.y][snake.x] = counter;
-		printer(bodysnake, arr, cols, rows);
-		cout << endl << "wasd to move(e to end)" << endl;
-		cin >> move;
-		if (move == 'w' || move == 'W')
-		{
-			snake.y--;
-		}
-		else if (move == 's' || move == 'S')
-		{
-			snake.y++;
+    Apple apple;
+    Snake snake;
+    srand(time(0));
+    int rows, cols, xsaver = 0, ysaver = 0, x = 0, y = 0, counter = 1;
+    char move;
+    bool win = 0, applechecker = 0;
+    cin >> rows >> cols;
+    char** arr = new char* [rows];
+    int** timerr = new int* [rows];
+    snake.x = rand() % rows;
+    snake.y = rand() % cols;
+    apple.x = rand() % rows;
+    apple.y = rand() % cols;
+    for (int i = 0; i < cols; i++)
+    {
+        arr[i] = new char[cols];
+    }
+    for (int i = 0; i < cols; i++)
+    {
+        timerr[i] = new int[cols];
+    }
+    for (int i = 0; i < cols; i++)
+    {
+        for (int j = 0; j < rows; j++)
+        {
+            timerr[i][j] = 0;
+        }
+    }
+    timerr[snake.x][snake.y] = counter;
+    while (timerr[apple.x][apple.y] > 0)
+    {
+        apple.x = rand() % rows;
+        apple.y = rand() % cols;
+    }
+    while (win == 0)
+    {
+        checker(timerr, cols, rows, counter, applechecker);
+        timerr[snake.y][snake.x] = counter;
+        if (applechecker == 1)
+        {
+            do {
+                apple.x = rand() % rows;
+                apple.y = rand() % cols;
+            } while (timerr[apple.y][apple.x] > 0);
+            counter++;
+        }
+        for (int i = 0; i < cols; i++)
+        {
+            for (int j = 0; j < rows; j++)
+            {
+                if (i == apple.y && j == apple.x)
+                {
+                    arr[i][j] = 'A';
+                }
+                else {
+                    arr[i][j] = 'X';
+                }
+            }
+        }
+        printer(timerr, arr, cols, rows);
+        cout << endl << "wasd to move(e to end)" << endl;
+        cin.ignore();
+        cin >> move;
+        if (move == 'w' || move == 'W')
+        {
+            snake.y--;
+        }
+        else if (move == 's' || move == 'S')
+        {
+            snake.y++;
 
-		}
-		else if (move == 'd' || move == 'D')
-		{
-			snake.x++;
-		}
-		else if (move == 'a' || move == 'A')
-		{
-			snake.x--;
-		}
-		else if (move == 'e' || move == 'E')
-		{
-			win = 1;
-		}
-		applechecker = 0;
-		if (snake.x == apple.x && snake.y == apple.y)
-		{
-			applechecker = 1;
-		}
-		system("cls");
-	}
-	deleter(arr, cols);
-	deleter(bodysnake, cols);
-	cout << "end";
+        }
+        else if (move == 'd' || move == 'D')
+        {
+            snake.x++;
+        }
+        else if (move == 'a' || move == 'A')
+        {
+            snake.x--;
+        }
+        else if (move == 'e' || move == 'E')
+        {
+            win = 1;
+        }
+        applechecker = 0;
+        if (snake.x == apple.x && snake.y == apple.y)
+        {
+            applechecker = 1;
+        }
+        system("cls");
+    }
+    chardeleter(arr, cols);
+    intdeleter(timerr, cols);
+    cout << "end";
 }
