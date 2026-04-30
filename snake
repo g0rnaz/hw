@@ -34,11 +34,17 @@ void checker(int** timerr, int cols, int rows, int counter, bool applechecker)
             {
                 timerr[i][j]++;
             }
-            timerr[i][j]--;
+            if (timerr[i][j]==0)
+            {
+
+            }
+            else {
+                timerr[i][j]--;
+            }
         }
     }
 }
-void printer(int** timerr, char** arr, int cols, int rows)
+void printer(int** timerr, char** arr, int cols, int rows, int Scounter, bool& win)
 {
     for (int i = 0; i < cols; i++)
     {
@@ -47,6 +53,7 @@ void printer(int** timerr, char** arr, int cols, int rows)
             if (timerr[i][j] > 0)
             {
                 cout << "S" << " ";
+                Scounter++;
             }
             else {
                 cout << arr[i][j] << " ";
@@ -54,14 +61,19 @@ void printer(int** timerr, char** arr, int cols, int rows)
         }
         cout << endl;
     }
+    if (Scounter == rows * cols)
+    {
+        cout << "you have won" << endl;
+    }
 }
 int main() {
     Apple apple;
     Snake snake;
     srand(time(0));
-    int rows, cols, xsaver = 0, ysaver = 0, x = 0, y = 0, counter = 1;
+    int rows, cols, xsaver = 0, ysaver = 0, x = 0, y = 0, counter = 1, Scounter = 0;
     char move;
-    bool win = 0, applechecker = 0;
+    bool win = 0, applechecker = 0, correct = 0;
+    bool& winn = win;
     cin >> rows >> cols;
     char** arr = new char* [rows];
     int** timerr = new int* [rows];
@@ -69,11 +81,11 @@ int main() {
     snake.y = rand() % cols;
     apple.x = rand() % rows;
     apple.y = rand() % cols;
-    for (int i = 0; i < cols; i++)
+    for (int i = 0; i < rows; i++)
     {
         arr[i] = new char[cols];
     }
-    for (int i = 0; i < cols; i++)
+    for (int i = 0; i < rows; i++)
     {
         timerr[i] = new int[cols];
     }
@@ -94,10 +106,13 @@ int main() {
     {
         if (applechecker == 1)
         {
-            do {
+            apple.x = rand() % rows;
+            apple.y = rand() % cols;
+            while (timerr[apple.y][apple.x] > 0)
+            {
                 apple.x = rand() % rows;
                 apple.y = rand() % cols;
-            } while (timerr[apple.y][apple.x] > 0);
+            }
             counter++;
         }
         for (int i = 0; i < cols; i++)
@@ -115,31 +130,95 @@ int main() {
         }
         checker(timerr, cols, rows, counter, applechecker);
         timerr[snake.y][snake.x] = counter;
-        printer(timerr, arr, cols, rows);
+        printer(timerr, arr, cols, rows, Scounter, winn);
         cout << endl << "wasd to move(e to end)" << endl;
         cin.ignore();
-        cin >> move;
-        if (move == 'w' || move == 'W')
+        while (correct == 0)
         {
-            snake.y--;
+            cin >> move;
+            if (move == 'w' || move == 'W')
+            {
+                snake.y--;
+                if (snake.y >= 0 && snake.y < cols)
+                {
+                    if (timerr[snake.y][snake.x] <= 0)
+                    {
+                        correct = 1;
+                    }
+                    else {
+                        snake.y++;
+                        cout << endl << "incorrect, enter again" << endl;
+                    }
+                }
+                else {
+                    snake.y++;
+                    cout << endl << "incorrect, enter again" << endl;
+                }
+            }
+            else if (move == 's' || move == 'S')
+            {
+                snake.y++;
+                if (snake.y >= 0 && snake.y < cols)
+                {
+                    if (timerr[snake.y][snake.x] <= 0)
+                    {
+                        correct = 1;
+                    }
+                    else {
+                        snake.y--;
+                        cout << endl << "incorrect, enter again" << endl;
+                    }
+                }
+                else {
+                    snake.y--;
+                    cout << endl << "incorrect, enter again" << endl;
+                }
+            }
+            else if (move == 'd' || move == 'D')
+            {
+                snake.x++;
+                if (snake.x >= 0 && snake.x < rows)
+                {
+                    if (timerr[snake.y][snake.x] <= 0)
+                    {
+                        correct = 1;
+                    }
+                    else {
+                        snake.x--;
+                        cout << endl << "incorrect, enter again" << endl;
+                    }
+                }
+                else {
+                    snake.x--;
+                    cout << endl << "incorrect, enter again" << endl;
+                }
+            }
+            else if (move == 'a' || move == 'A')
+            {
+                snake.x--;
+                if (snake.x >= 0 && snake.x < rows)
+                {
+                    if (timerr[snake.y][snake.x] <= 0)
+                    {
+                        correct = 1;
+                    }
+                    else {
+                        snake.x++;
+                        cout << endl << "incorrect, enter again" << endl;
+                    }
+                }
+                else {
+                    snake.x++;
+                    cout << endl << "incorrect, enter again" << endl;
+                }
+            }
+            else if (move == 'e' || move == 'E')
+            {
+                win = 1;
+                correct = 1;
+            }
         }
-        else if (move == 's' || move == 'S')
-        {
-            snake.y++;
-
-        }
-        else if (move == 'd' || move == 'D')
-        {
-            snake.x++;
-        }
-        else if (move == 'a' || move == 'A')
-        {
-            snake.x--;
-        }
-        else if (move == 'e' || move == 'E')
-        {
-            win = 1;
-        }
+        correct = 0;
         applechecker = 0;
         if (snake.x == apple.x && snake.y == apple.y)
         {
