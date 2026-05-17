@@ -1,0 +1,506 @@
+
+
+#include <iostream>
+
+using namespace std;
+
+#include "Filename.h"
+
+#include "Filename1.h"
+ 
+enum puncts{sortname,
+
+	sortid,
+
+	sortavg,
+
+	sortbday,
+
+	show,
+
+	add,
+
+	deleter,
+
+	exitt};
+
+int main()
+
+{
+
+	int choice=0;
+
+	int id;
+
+	uint size;
+
+	uint& sizee = size;
+
+	cout << "Enter size: ";
+
+	cin >> sizee;
+
+	Student* students = new Student[sizee];
+
+	for (uint i = 0; i < sizee; i++)
+
+	{
+
+		students[i] = createStudent();
+
+	}
+
+	while (choice != exitt)
+
+	{
+
+		cout << "sort by name-0, sort by id-1, sort by average-2, sort by birthday-3 show-4, add-5, remove-6, exit-7\n";
+
+		cin >> choice;
+
+		if (choice == sortname) {
+
+			sortByName(students, sizee);
+
+		}
+
+		else if (choice == sortid) {
+
+			sortById(students, sizee);
+
+		}
+
+		else if (choice == sortavg) {
+
+			sortByAverage(students, sizee);
+
+		}
+
+		else if (choice == sortbday) {
+
+			sortByBday(students, sizee);
+
+		}
+
+		else if (choice == show)
+
+		{
+
+			for (uint i = 0; i < sizee; i++)
+
+			{
+
+				showStudent(students[i]);
+
+			}
+
+		}
+
+		else if (choice == add)
+
+		{
+
+			students=addstudent(students, sizee);
+
+		}
+
+		else if (choice == deleter)
+
+		{
+
+			cout << "enter id: ";
+
+			cin >> id;
+
+			students=deletestudent(students, sizee, id);
+
+		}
+
+	}
+
+		clear(students, sizee);
+
+		return 0;
+
+}
+ 
+#pragma once
+
+typedef unsigned int uint;
+
+typedef unsigned short ushort;
+ 
+struct Date
+
+{
+
+	ushort day;
+
+	ushort month;
+
+	ushort year;
+
+};
+
+struct Student
+
+{
+
+	char* name;
+
+	Date birthdayDate;
+
+	uint id;
+
+	float average;
+
+};
+ 
+#pragma once
+
+Student createStudent()
+
+{
+
+	cin.ignore();
+
+	Student std{};
+
+	static uint id = 100;
+
+	std.id = id++;
+
+	const int N = 20;
+
+	char n[N];
+
+	cout << "Enter name: ";
+
+	cin.getline(n, N);
+
+	std.name = new char[strlen(n) + 1];
+
+	strcpy_s(std.name, strlen(n) + 1, n);
+
+	cout << "Enter average: ";
+
+	cin >> std.average;
+
+	cout << "BirthdayDate (year month day):";
+
+	cin >> std.birthdayDate.year;
+
+	cin >> std.birthdayDate.month;
+
+	cin >> std.birthdayDate.day;
+
+	return std;
+
+}
+
+//відображення студента
+ 
+void showStudent(const Student& std)
+
+{
+
+	cout << std.id << '\t'
+<< std.name << '\t'
+<< std.average << '\t'
+<< std.birthdayDate.day << '.' << std.birthdayDate.month << '.'
+<< std.birthdayDate.year << endl;
+
+}
+
+void clearNames(Student* students, uint size)
+
+{
+
+	for (int i = 0; i < size; i++)
+
+	{
+
+		delete[] students[i].name;
+
+	}
+
+}
+
+void clear(Student* students, uint size)
+
+{
+
+	clearNames(students, size);
+
+	delete[] students;
+
+}
+
+void sortByName(Student* students, uint size)
+
+{
+
+	for (uint i = 0; i < size - 1; i++)
+
+	{
+
+		for (uint j = 0; j < size - 1; j++)
+
+		{
+
+			if (strcmp(students[j].name, students[j + 1].name)>0)
+
+			{
+
+				swap(students[j], students[j + 1]);
+
+			}
+
+		}
+
+	}
+
+	for (uint i = 0; i < size; i++)
+
+	{
+
+		showStudent(students[i]);
+
+	}
+
+}
+
+void sortById(Student* students, uint size)
+
+{
+
+	for (uint i = 0; i < size - 1; i++)
+
+	{
+
+		for (uint j = 0; j < size - 1; j++)
+
+		{
+
+			if (students[j].id > students[j + 1].id)
+
+			{
+
+				swap(students[j], students[j + 1]);
+
+			}
+
+		}
+
+	}
+
+	for (uint i = 0; i < size; i++)
+
+	{
+
+		showStudent(students[i]);
+
+	}
+
+}
+
+void sortByAverage(Student* students, uint size)
+
+{
+
+	for (uint i = 0; i < size - 1; i++)
+
+	{
+
+		for (uint j = 0; j < size - 1; j++)
+
+		{
+
+			if (students[j].average > students[j + 1].average)
+
+			{
+
+				swap(students[j], students[j + 1]);
+
+			}
+
+		}
+
+	}
+
+	for (uint i = 0; i < size; i++)
+
+	{
+
+		showStudent(students[i]);
+
+	}
+
+}
+
+void sortByBday(Student* students, uint size)
+
+{
+
+	for (uint i = 0; i < size - 1; i++)
+
+	{
+
+		for (uint j = 0; j < size - 1; j++)
+
+		{
+
+			if (students[j].birthdayDate.year > students[j + 1].birthdayDate.year)
+
+			{
+
+				swap(students[j], students[j + 1]);
+
+			}
+
+			else if (students[j].birthdayDate.month > students[j + 1].birthdayDate.month)
+
+			{
+
+				swap(students[j], students[j + 1]);
+
+			}
+
+			else if (students[j].birthdayDate.day > students[j + 1].birthdayDate.day)
+
+			{
+
+				swap(students[j], students[j + 1]);
+
+			}
+
+		}
+
+	}
+
+	for (uint i = 0; i < size; i++)
+
+	{
+
+		showStudent(students[i]);
+
+	}
+
+}
+
+Student* deletestudent(Student* students, unsigned int& size, int id)
+
+{
+
+	bool checker = 0;
+
+	for (int i = 0; i < size; i++)
+
+	{
+
+		if (students[i].id == id)
+
+		{
+
+			checker = 1;
+
+		}
+
+	}
+
+	if (checker == 0)
+
+	{
+
+		cout << "id is incorrect" << endl;
+
+		return students;
+
+	}
+
+	Student* students2 = new Student[size - 1];
+
+	int j = 0;
+
+	for (int i = 0; i < size; i++)
+
+	{
+ 
+		if (id != students[i].id)
+
+		{
+
+			students2[j].name = new char[strlen(students[i].name) + 1];
+
+			strcpy_s(students2[j].name, strlen(students[i].name) + 1, students[i].name);
+
+			students2[j].id = students[i].id;
+
+			students2[j].average = students[i].average;
+
+			students2[j].birthdayDate.year = students[i].birthdayDate.year;
+
+			students2[j].birthdayDate.month = students[i].birthdayDate.month;
+
+			students2[j].birthdayDate.day = students[i].birthdayDate.day;
+
+			j++;
+
+		}
+
+	}
+
+	clear(students, size);
+
+	size--;
+
+	return students2;
+
+}
+
+Student* addstudent(Student* students, unsigned int& size)
+
+{
+
+	size++;
+
+	Student* students2 = new Student[size];
+
+	for (int i = 0; i < size; i++)
+
+	{
+
+		if (i == size - 1)
+
+		{
+
+			students2[i] = createStudent();
+
+		}
+
+		else {
+
+			students2[i].name = new char[strlen(students[i].name) + 1];
+
+			strcpy_s(students2[i].name, strlen(students[i].name) + 1, students[i].name);
+
+			students2[i].id = students[i].id;
+
+			students2[i].average = students[i].average;
+
+			students2[i].birthdayDate.year = students[i].birthdayDate.year;
+
+			students2[i].birthdayDate.month = students[i].birthdayDate.month;
+
+			students2[i].birthdayDate.day = students[i].birthdayDate.day;
+
+		}
+
+	}
+
+	clear(students, size - 1);
+
+	return students2;
+
+}
+ 
