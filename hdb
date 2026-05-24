@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+struct Fraction{
+	int chis;
+	int znam;
+};
+int main()
+{
+	int chis, znam;
+	int n;
+	cin >> n;
+	Fraction* f = new Fraction [n];
+	for (int i = 0; i < n; i++)
+	{
+		cin >> f[i].chis;
+		cin >> f[i].znam;
+	}
+	const char* PATH_TO_FILE = "data.txt";
+	const char* MODE = "wb+";
+	FILE* file = nullptr;
+	fopen_s(&file, PATH_TO_FILE, MODE);
+	if (file != nullptr)
+	{
+		fwrite(f, sizeof(Fraction), n, file);
+		Fraction* temp = new Fraction[n];
+		fseek(file, 0, SEEK_SET);
+		fread_s(temp,sizeof(Fraction)*n, sizeof(Fraction), n, file);
+		for (int i = 0; i < n; i++)
+		{
+			cout << temp[i].chis;
+			cout << "/" << temp[i].znam << endl;
+		}
+		fclose(file);
+	}
+	else
+	{
+		cout << "Error";
+	}
+ 
+ 
+}
