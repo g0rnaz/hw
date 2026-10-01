@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-int* numberr(int* random, int j, const int TOTAL_NUMBERS=10) {
+int* numberr(int* random, int j, const int TOTAL_NUMBERS = 10) {
 	for (int l = TOTAL_NUMBERS; l >= 0; l--)
 	{
 		if (*random < j)
@@ -15,7 +15,7 @@ int* numberr(int* random, int j, const int TOTAL_NUMBERS=10) {
 	}
 	return random;
 }
-void number_generator(int iften, int* random, double number, double* best, const int SUMM_FROM_1_TO_10=55, const int TOTAL_NUMBERS=10) {
+void number_generator(int iften, int* random, double number, double* best, const int SUMM_FROM_1_TO_10 = 55, const int TOTAL_NUMBERS = 10) {
 	for (int k = 0; k < iften; k++)
 	{
 		*random = rand() % SUMM_FROM_1_TO_10;
@@ -34,20 +34,46 @@ void number_generator(int iften, int* random, double number, double* best, const
 		}
 	}
 }
-	int main() {
-		srand(time(0));
-		int rolls, random=1, checker, iften = 1;
-		const int SUMM_FROM_1_TO_10 = 55, TOTAL_NUMBERS = 10;
-		double number = 0, best = 0;
-		double* bests = &best;
-		int* randoms = &random;
-			cout << "input amount of rolls: ";
-			cin >> rolls;
-			for (int i = 0; i < rolls; i++)
-			{
-				number = 0;
-				iften = 1;
-				number_generator(iften, randoms, number, bests);
-			}
-			cout << "best" << *bests << endl;
-		}
+double chance(double* best) {
+	double chance=1.0;
+	double lastnum;
+	long long copy = *best;
+	/*
+	0=10/55
+	1=9/55
+	2=8/55
+	3=7/55
+	4=6/55
+	5=5/55
+	6=4/55
+	7=3/55
+	8=2/55
+	9=1/55
+
+	*/
+	do {
+		lastnum = copy % 10;
+		chance *= (10.0 - lastnum) / 55.0;
+		copy /= 10;
+	} while (copy > 0);
+	return chance;
+}
+int main() {
+	srand(time(0));
+	int rolls, random = 1, checker, iften = 1;
+	const int SUMM_FROM_1_TO_10 = 55, TOTAL_NUMBERS = 10;
+	double number = 0, best = 0;
+	double* bests = &best;
+	int* randoms = &random;
+	cout << "input amount of rolls: ";
+	cin >> rolls;
+	for (int i = 0; i < rolls; i++)
+	{
+		number = 0;
+		iften = 1;
+		number_generator(iften, randoms, number, bests);
+	}
+	double chanc = chance(bests);
+	cout << "best: " << *bests << endl;
+	cout << "chance: " << chanc*100 << "%";
+}
