@@ -37,6 +37,7 @@ void number_generator(int iften, int* random, double number, double* best, const
 double chance(double* best) {
 	double chance=1.0;
 	double lastnum;
+	int mult = 0;
 	long long copy = *best;
 	/*
 	0=10/55
@@ -52,10 +53,12 @@ double chance(double* best) {
 
 	*/
 	do {
+		mult++;
 		lastnum = copy % 10;
 		chance *= (10.0 - lastnum) / 55.0;
 		copy /= 10;
 	} while (copy > 0);
+	chance/= pow(10,mult);
 	return chance;
 }
 int main() {
